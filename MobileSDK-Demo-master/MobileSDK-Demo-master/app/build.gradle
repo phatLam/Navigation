@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    maven {
+        url "http://maven.regulaforensics.com/RegulaDocumentReader/Beta"
+    }
+}
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.alltrustnetworks.smartcheck.app"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // support dependencies
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    implementation "com.android.support:percent:28.0.0"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    // MISC dependencies
+    implementation 'gun0912.ted:tedpermission:2.2.2'
+    implementation 'com.squareup.okio:okio:1.14.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.squareup.moshi:moshi:1.5.0'
+    implementation 'org.parceler:parceler-api:1.1.10'
+    implementation(name:'Android-TiffBitmapFactory', ext:'aar')
+    annotationProcessor 'org.parceler:parceler:1.1.10'
+
+    // Regula dependencies
+    implementation 'com.regula.documentreader.fullrfid:core:2.3.83347'
+    implementation('com.regula.documentreader:api:2.3.83289') {
+        transitive = true;
+    }
+
+    // Mitek dependencies
+    implementation (name:'api-release', ext:'aar')
+    implementation (name:'sanselan-release', ext:'aar')
+    implementation(name: 'misnapcamera-release', ext: 'aar') {
+        exclude module: 'appcompat-v7'
+    }
+    implementation(name: 'misnapscience-release', ext: 'aar') {
+        exclude module: 'appcompat-v7'
+    }
+    implementation (name:'misnapworkflow-release', ext:'aar')
+    implementation "de.greenrobot:eventbus:2.4.0"
+
+    // SmartCheck SDK
+    implementation(name:'SmartCheckSDK', ext:'aar')
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

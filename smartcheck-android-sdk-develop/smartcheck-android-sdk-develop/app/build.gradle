@@ -1,0 +1,121 @@
+//apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        // applicationId "smartcheck.alltrustnetworks.com.smartcheck"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+        }
+    }
+    flavorDimensions "server"
+    productFlavors{
+        stage{
+            dimension "server"
+            buildConfigField "String", "API_URL", DEV_API_URL
+            buildConfigField "String", "API_URL_CONSUMER", DEV_API_URL_CONSUMER
+            buildConfigField "String", "BUSINESS_ID", DEV_BUSINESS_ID
+            buildConfigField "String", "LOCATION_ID", DEV_LOCATION_ID
+            buildConfigField "String", "API_TOKEN", DEV_API_TOKEN
+            buildConfigField "String", "misnapUrl", DEV_misnapUrl
+            buildConfigField "String", "phoneUserName", DEV_phoneUserName
+            buildConfigField "String", "misnapUsername", DEV_misnapUsername
+            buildConfigField "String", "misnapPassword", DEV_misnapPassword
+        }
+        anytimecash{
+            dimension "server"
+            buildConfigField "String", "API_URL", PROD_API_URL
+            buildConfigField "String", "API_URL_CONSUMER", PROD_API_URL_CONSUMER
+            buildConfigField "String", "BUSINESS_ID", PROD_BUSINESS_ID
+            buildConfigField "String", "LOCATION_ID", PROD_LOCATION_ID
+            buildConfigField "String", "API_TOKEN", PROD_API_TOKEN
+            buildConfigField "String", "misnapUrl", PROD_misnapUrl
+            buildConfigField "String", "phoneUserName", PROD_phoneUserName
+            buildConfigField "String", "misnapUsername", PROD_misnapUsername
+            buildConfigField "String", "misnapPassword", PROD_misnapPassword
+        }
+    }
+    libraryVariants.all { variant ->
+        variant.outputs.all { output ->
+            if (outputFile != null && outputFileName.endsWith('.aar')) {
+                outputFileName = "SmartCheckSDK.aar"
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    // support dependencies
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation "com.android.support:percent:28.0.0"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+
+    // Misc dependencies
+    implementation 'gun0912.ted:tedpermission:2.2.2'
+    implementation 'com.squareup.okio:okio:1.14.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    //implementation 'com.quickbirdstudios:opencv:3.4.1'
+    implementation 'com.squareup.moshi:moshi:1.5.0'
+    implementation(name:'Android-TiffBitmapFactory', ext:'aar')
+
+    api 'org.parceler:parceler-api:1.1.10'
+    annotationProcessor 'org.parceler:parceler:1.1.10'
+
+    // Regula dependencies
+    implementation 'com.regula.documentreader.fullrfid:core:+@aar'
+    implementation('com.regula.documentreader:api:+@aar') {
+        transitive = true
+    }
+
+    // MISNAP dependencies
+    implementation 'de.greenrobot:eventbus:2.4.0'
+    implementation (name:'api-release', ext:'aar')
+    implementation (name:'sanselan-release', ext:'aar')
+    implementation(name: 'misnapcamera-release', ext:'aar') {
+        exclude module: 'appcompat-v7'
+    }
+    implementation(name: 'misnapscience-release', ext:'aar') {
+        exclude module: 'appcompat-v7'
+    }
+    implementation (name:'misnapworkflow-release', ext:'aar')
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.json:json:20140107'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}

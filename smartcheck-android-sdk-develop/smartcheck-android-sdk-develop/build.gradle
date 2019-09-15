@@ -1,0 +1,44 @@
+buildscript {
+    repositories {
+        google()
+        jcenter()
+
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+        maven {
+            url "http://maven.regulaforensics.com/RegulaDocumentReader"
+        }
+        maven { url 'https://jitpack.io' }
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+task copyAAR(type: Copy) {
+    from('app/build/outputs/aar')
+    into('release')
+    include('SmartCheckSDK.aar')
+}
+
+task copyToDemo(type: Copy) {
+    from('app/build/outputs/aar')
+    into('../SmartCheckSDKExample/app/libs')
+    include('SmartCheckSDK.aar')
+}
