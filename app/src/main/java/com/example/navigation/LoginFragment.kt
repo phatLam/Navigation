@@ -50,4 +50,12 @@ class LoginFragment : Fragment() {
     private fun showErrorMessage() {
         Snackbar.make(this!!.view!!, "invalid user or password", Snackbar.LENGTH_LONG)
     }
+
+    public fun abc(){
+
+    }
+
+    public fun xyz(){
+
+    }
 }
